@@ -9,7 +9,6 @@
 
 <script>
 // @ is an alias to /src
-import store from '@/my-store'
 import CustomButton from '@/components/CustomButton'
 
 export default {
@@ -17,10 +16,11 @@ export default {
   components: {
     CustomButton
   },
-  data () {
-    return {
-      sharedState: store.state
-    }
+  computed: {
+
+  },
+  methods: {
+
   }
 }
 </script>

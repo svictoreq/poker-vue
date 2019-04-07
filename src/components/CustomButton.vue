@@ -1,5 +1,5 @@
 <template>
-  <button :style="styles" @click="clickMethod">
+  <button :style="styles" @click="clickHandler">
     <slot></slot>
   </button>
 </template>
@@ -19,7 +19,7 @@ export default {
         color: this.txtColor
       }
     },
-    clickMethod () {
+    clickHandler () {
       if (this.onClick) return this.onClick
       return function () {}
     }

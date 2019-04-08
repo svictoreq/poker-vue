@@ -1,3 +1,5 @@
+import { Card } from '@/utils/classes'
+
 export function containsAllKeys (base, comp) {
   let flag = false
   for (let key of comp) {
@@ -44,4 +46,64 @@ export function getRandomNames (n) {
     selected.push(names.splice(index, 1)[0])
   }
   return selected
+}
+
+function createCardData (suitNum, valueNum) {
+  const card = {
+    suit: null,
+    value: null
+  }
+
+  switch (suitNum) {
+    case 0:
+      card.suit = 'spades'
+      break
+
+    case 1:
+      card.suit = 'hearts'
+      break
+
+    case 2:
+      card.suit = 'clubs'
+      break
+
+    case 3:
+      card.suit = 'diamonds'
+      break
+  }
+
+  switch (valueNum) {
+    case 0:
+      card.value = 'A'
+      break
+
+    case 10:
+      card.value = 'J'
+      break
+
+    case 11:
+      card.value = 'Q'
+      break
+
+    case 12:
+      card.value = 'K'
+      break
+
+    default:
+      card.value = `${valueNum + 1}`
+      break
+  }
+
+  return card
+}
+
+export function generateDeck () {
+  const deck = []
+  for (let suit = 0; suit < 4; suit++) {
+    for (let value = 0; value < 13; value++) {
+      const cardData = createCardData(suit, value)
+      deck.push(new Card(cardData.suit, cardData.value))
+    }
+  }
+  return deck
 }

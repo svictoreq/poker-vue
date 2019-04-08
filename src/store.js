@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 import { Player } from '@/utils/classes'
 import {
   containsAllKeys,
-  getRandomNames
+  getRandomNames,
+  generateDeck
 } from '@/utils/helpers'
 import {
   SET_STATE,
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     },
     [CREATE_GAME] (state, data) {
       state.settings = false
+      state.gameData.deck = generateDeck()
       state.gameData.playerCount = data.playerCount
       state.gameData.initialMoney = data.initialMoney
       state.gameData.players = []

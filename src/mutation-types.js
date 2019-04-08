@@ -1,1 +1,3 @@
 export const SET_STATE = 'SET_STATE'
+export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS'
+export const CREATE_GAME = 'CREATE_GAME'

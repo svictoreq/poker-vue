@@ -36,5 +36,10 @@ button {
   font-size: 1.5em;
   font-weight: bold;
   cursor: pointer;
+  outline: none;
+}
+
+button:active {
+  opacity: 0.8;
 }
 </style>

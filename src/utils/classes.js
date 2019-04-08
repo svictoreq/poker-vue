@@ -1,6 +1,7 @@
 export class Player {
-  constructor (id, turn, money) {
+  constructor (id, name, turn, money) {
     this.id = id
+    this.name = name
     this.turn = turn
     this.money = money
     this.cards = []

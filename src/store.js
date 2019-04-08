@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { Player } from '@/utils/classes'
 import {
-  containsAllKeys
+  containsAllKeys,
+  getRandomNames
 } from '@/utils/helpers'
 import {
   SET_STATE,
@@ -15,10 +16,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     settings: false,
-    gameOptions: {
+    gameData: {
       playerCount: 6,
       players: [],
-      initialMoney: 1000
+      initialMoney: 1000,
+      deck: [],
+      hands: []
     }
   },
   mutations: {
@@ -32,12 +35,15 @@ export default new Vuex.Store({
       state.settings = !state.settings
     },
     [CREATE_GAME] (state, data) {
-      state.gameOptions.playerCount = data.playerCount
-      state.gameOptions.initialMoney = data.initialMoney
-      state.gameOptions.players = []
-      for (let i = 0; i < state.gameOptions.playerCount; i++) {
+      state.settings = false
+      state.gameData.playerCount = data.playerCount
+      state.gameData.initialMoney = data.initialMoney
+      state.gameData.players = []
+      const names = [data.playerName]
+      names.push(...getRandomNames(data.playerCount - 1))
+      for (let i = 0; i < state.gameData.playerCount; i++) {
         const id = Date.now().toString() + (i + 1)
-        state.gameOptions.players.push(new Player(id, i + 1, state.gameOptions.initialMoney))
+        state.gameData.players.push(new Player(id, names[i], i + 1, state.gameData.initialMoney))
         console.info()
       }
     }

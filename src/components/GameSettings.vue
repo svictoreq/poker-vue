@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <div class="modal">
+    <div class="dialog">
       <div class="options-wrapper">
         <div class="select-wrapper">
           <label for="player-count">Players: </label>
@@ -22,6 +22,10 @@
             <option :value="15000">15000</option>
           </select>
         </div>
+      </div>
+      <div class="input-wrapper">
+        <label for="player-name">Name: </label>
+        <input type="text" name="player-name" autocomplete="off" v-model="playerName">
       </div>
       <div class="buttons-wrapper">
         <custom-button
@@ -49,14 +53,16 @@ export default {
   data () {
     return {
       playerCount: 6,
-      initialMoney: 1000
+      initialMoney: 1000,
+      playerName: ''
     }
   },
   computed: {
-    gameOptions () {
+    gameData () {
       return {
         playerCount: this.playerCount,
-        initialMoney: this.initialMoney
+        initialMoney: this.initialMoney,
+        playerName: this.playerName
       }
     }
   },
@@ -66,7 +72,12 @@ export default {
       'createGame'
     ]),
     play () {
-      this.createGame(this.gameOptions)
+      if (!this.playerName) {
+        alert('You have to insert a name')
+        return
+      }
+      this.createGame(this.gameData)
+      this.$router.push('/play')
     }
   }
 }
@@ -87,7 +98,7 @@ div.overlay {
   filter: none;
 }
 
-div.modal {
+div.dialog {
   background-color: #FFFFFF;
   display: flex;
   flex-flow: column nowrap;
@@ -98,7 +109,7 @@ div.modal {
 
 div.options-wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   font-size: 1.4em;
 }
 
@@ -109,9 +120,31 @@ div.options-wrapper select {
   outline: none;
 }
 
+div.input-wrapper {
+  margin: 32px 0 0;
+  font-size: 1.4em;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+}
+
+div.input-wrapper input {
+  width: 250px;
+  font-size: 0.9em;
+  font-family: 'Roboto';
+  margin-left: 8px;
+  border: none;
+  border-bottom: 1px solid buttonface;
+  outline: none;
+}
+
+div.input-wrapper input:focus {
+  border-bottom: 1px solid #00BCD4;
+}
+
 div.buttons-wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-top: 71px;
 }
 </style>

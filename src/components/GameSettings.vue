@@ -5,11 +5,11 @@
         <div class="select-wrapper">
           <label for="player-count">Players: </label>
           <select name="player-count" v-model="playerCount">
-            <option :value="2">2</option>
-            <option :value="3">3</option>
-            <option :value="4">4</option>
-            <option :value="5">5</option>
             <option :value="6">6</option>
+            <option :value="5">5</option>
+            <option :value="4">4</option>
+            <option :value="3">3</option>
+            <option :value="2">2</option>
           </select>
         </div>
         <div class="select-wrapper">

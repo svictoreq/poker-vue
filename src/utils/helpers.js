@@ -107,3 +107,7 @@ export function generateDeck () {
   }
   return deck
 }
+
+export function getRandomCard (deck) {
+  return deck[Math.floor(Math.random() * deck.length)]
+}

@@ -1,3 +1,5 @@
 export const SET_STATE = 'SET_STATE'
 export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS'
 export const CREATE_GAME = 'CREATE_GAME'
+export const REMOVE_CARD = 'REMOVE_CARD'
+export const ASSIGN_PLAYER_CARD = 'ASSIGN_PLAYER_CARD'

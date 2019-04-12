@@ -1,20 +1,41 @@
 <template>
   <div class="table">
-    <div class="players-wrapper">
-      <div class="players-grid">
-        <div v-for="(player, i) in gameData.players" :key="player.id" :class="`player-${i+1}`">
-          {{ player.name }}
+    <div class="game-wrapper">
+      <div class="table-grid">
+        <div class="center">
+          <div class="community-cards">
+            card
+          </div>
+          <div class="pot">
+            coins
+          </div>
         </div>
+        <player v-for="(player) in gameData.players"
+          :key="player.id"
+          :id="player.id"
+          :name="player.name"
+          :cards="player.cards"
+          :money="player.money"
+          :turn="player.turn"
+          :isUser="player.id === gameData.playerId" />
       </div>
+    </div>
+    <div class="button-wrapper">
+      <button @click="dealPlayerCards">Deal</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { getRandomCard } from '@/utils/helpers'
+import Player from '@/components/Player'
 
 export default {
   name: 'game-table',
+  components: {
+    Player
+  },
   data () {
     return {
 
@@ -26,7 +47,20 @@ export default {
     ])
   },
   methods: {
-
+    ...mapActions([
+      'removeCard',
+      'assignPlayerCard'
+    ]),
+    dealPlayerCards () {
+      for (let i = 0; i < 2; i++) {
+        for (let pIdx = 0; pIdx < this.gameData.playerCount; pIdx++) {
+          const player = this.gameData.players[pIdx]
+          const card = getRandomCard(this.gameData.deck)
+          this.assignPlayerCard({ playerId: player.id, card })
+          this.removeCard(card)
+        }
+      }
+    }
   }
 }
 </script>
@@ -41,43 +75,30 @@ div.table {
   background-color: #e6e6e6;
 }
 
-div.players-wrapper {
+div.game-wrapper {
   height: 80vh;
   display: flex;
 }
 
-div.players-grid {
+div.table-grid {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr 2fr 1fr;
   grid-template-areas:
     ". player-4 player-5 ."
-    "player-3 table table player-6"
+    "player-3 center center player-6"
     ". player-2 player-1 .";
 }
 
-div.player-1 {
-  grid-area: player-1;
+div.center {
+  grid-area: center;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
-div.player-2 {
-  grid-area: player-2;
-}
-
-div.player-3 {
-  grid-area: player-3;
-}
-
-div.player-4 {
-  grid-area: player-4;
-}
-
-div.player-5 {
-  grid-area: player-5;
-}
-
-div.player-6 {
-  grid-area: player-6;
+div.button-wrapper {
+  height: 10vh;
+  width: 100%;
 }
 </style>

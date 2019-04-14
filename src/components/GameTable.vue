@@ -14,27 +14,34 @@
           :key="player.id"
           :id="player.id"
           :name="player.name"
+          :number="player.pNumber"
           :cards="player.cards"
           :money="player.money"
           :turn="player.turn"
+          :dealing="player.id === gameData.dealer"
           :isUser="player.id === gameData.playerId" />
       </div>
     </div>
-    <div class="button-wrapper">
-      <button @click="dealPlayerCards">Deal</button>
+    <div class="buttons-wrapper">
+      <custom-button :disabled="disableButtons">Check</custom-button>
+      <custom-button :disabled="disableButtons">Call</custom-button>
+      <custom-button :disabled="disableButtons">Raise</custom-button>
+      <custom-button :disabled="disableButtons">Fold</custom-button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import { getRandomCard } from '@/utils/helpers'
 import Player from '@/components/Player'
+import CustomButton from '@/components/CustomButton'
 
 export default {
   name: 'game-table',
   components: {
-    Player
+    Player,
+    CustomButton
   },
   data () {
     return {
@@ -44,7 +51,13 @@ export default {
   computed: {
     ...mapState([
       'gameData'
-    ])
+    ]),
+    ...mapGetters([
+      'user'
+    ]),
+    disableButtons () {
+      return !(this.user.turn === this.gameData.turn)
+    }
   },
   methods: {
     ...mapActions([
@@ -61,6 +74,9 @@ export default {
         }
       }
     }
+  },
+  created () {
+
   }
 }
 </script>
@@ -97,8 +113,8 @@ div.center {
   flex-flow: column nowrap;
 }
 
-div.button-wrapper {
-  height: 10vh;
+div.buttons-wrapper {
   width: 100%;
+  padding-top: 16px;
 }
 </style>

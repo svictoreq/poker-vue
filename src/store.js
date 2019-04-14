@@ -25,7 +25,18 @@ export default new Vuex.Store({
       players: [],
       initialMoney: 1000,
       deck: [],
-      hands: []
+      turn: 1,
+      bettingRound: 1,
+      dealer: '',
+      smallBlind: 0,
+      bigBlind: 0,
+      pot: 0
+    }
+  },
+  getters: {
+    user (state) {
+      return state.gameData.players
+        .find((player) => player.id === state.gameData.playerId)
     }
   },
   mutations: {
@@ -48,8 +59,12 @@ export default new Vuex.Store({
       names.push(...getRandomNames(data.playerCount - 1))
       for (let i = 0; i < state.gameData.playerCount; i++) {
         const id = Date.now().toString() + (i + 1)
-        if (names[i] === data.playerName) state.gameData.playerId = id
-        state.gameData.players.push(new Player(id, names[i], i + 1, state.gameData.initialMoney))
+        const turn = i === 0 ? 6 : i
+        if (names[i] === data.playerName) {
+          state.gameData.playerId = id
+          state.gameData.dealer = id
+        }
+        state.gameData.players.push(new Player(id, names[i], i + 1, turn, state.gameData.initialMoney))
         console.info()
       }
     },
@@ -60,7 +75,7 @@ export default new Vuex.Store({
     [ASSIGN_PLAYER_CARD] (state, { playerId, card }) {
       const playerIndex = state.gameData.players
         .findIndex((player) => player.id === playerId)
-      state.gameData.players[playerIndex].cards.push(card)
+      state.gameData.players[playerIndex].addCard(card)
     }
   },
   actions: {

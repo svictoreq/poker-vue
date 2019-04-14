@@ -1,5 +1,5 @@
 <template>
-  <button :style="styles" @click="clickHandler">
+  <button :style="styles" @click="clickHandler" :disabled="disabled">
     <slot></slot>
   </button>
 </template>
@@ -10,7 +10,8 @@ export default {
   props: {
     bgColor: String,
     txtColor: String,
-    onClick: Function
+    onClick: Function,
+    disabled: Boolean
   },
   computed: {
     styles () {

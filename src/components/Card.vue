@@ -57,17 +57,13 @@ div.card {
   box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px;
 }
 
-div.card div span {
-  font-family: 'Operator SSm Medium';
-}
-
-div.card.spades,
-div.card.clubs {
+div.upwards.spades,
+div.upwards.clubs {
   color: #121212;
 }
 
-div.card.diamonds,
-div.card.hearts {
+div.upwards.diamonds,
+div.upwards.hearts {
   color: #f22d42;
 }
 
